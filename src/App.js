@@ -7,10 +7,19 @@ import home from "./assets/home.svg";
 import saved from "./assets/bookmark.svg";
 import rocket from "./assets/rocket.svg";
 import sendBtn from "./assets/send.svg";
-import userIcon from './assets/user-icon.png'
-import gptImgLogo from './assets/chatgptLogo.svg'
+import userIcon from "./assets/user-icon.png";
+import gptImgLogo from "./assets/chatgptLogo.svg";
+import { sendMsgToOpenAI } from "./openai";
+import { useState } from "react";
 
 function App() {
+  const [input, setInput] = useState("");
+
+  const handleSend = async () => {
+    const res = await sendMsgToOpenAI(input);
+    console.log(res);
+  };
+
   return (
     <div className="App">
       <div className="sideBar">
@@ -50,20 +59,52 @@ function App() {
       <div className="main">
         <div className="chats">
           <div className="chat">
-            <img className="chatImg" src={userIcon} alt="" /><p className="txt">Lorem ipsum dolor sit amet consectetur adipisicing alit.Obcaecati sint nobis excepturi optio voluptas nemo ex officlis eos quam illo?</p>
+            <img className="chatImg" src={userIcon} alt="" />
+            <p className="txt">
+              Lorem ipsum dolor sit amet consectetur adipisicing alit.Obcaecati
+              sint nobis excepturi optio voluptas nemo ex officlis eos quam
+              illo?
+            </p>
           </div>
-          <div className="chat">
-            <img className="chatImg" src={gptImgLogo} alt="" /><p className="txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, officia laborum provident tempore quisquam pariatur. Unde impedit libero, officiis vero pariatur minima iure. Rerum numquam sed laboriosam! Earum, dignissimos! Quaerat repellendus temporibus voluptas obcaecati consequatur repudiandae modi, mollitia qui molestias ex similique praesentium perspiciatis deserunt! Eveniet itaque culpa consequuntur eius exercitationem ipsum perferendis libero beatae somnis expedita? Magnam similique libero in ducimus omnis ratione inventore quia quae, aliquam consequuntur commodi distinctio minus recusandae consectetur quibusdam ad officiis officia tenetur maiores dolorum? Quae repudiandae, excepturi soluta mollitia facere cum. Repudiandae doloribus provident animi fugiat a sunt porro maiores, modi odit quis.</p>
+          <div className="chat bot">
+            <img className="chatImg" src={gptImgLogo} alt="" />
+            <p className="txt">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum,
+              officia laborum provident tempore quisquam pariatur. Unde impedit
+              libero, officiis vero pariatur minima iure. Rerum numquam sed
+              laboriosam! Earum, dignissimos! Quaerat repellendus temporibus
+              voluptas obcaecati consequatur repudiandae modi, mollitia qui
+              molestias ex similique praesentium perspiciatis deserunt! Eveniet
+              itaque culpa consequuntur eius exercitationem ipsum perferendis
+              libero beatae somnis expedita? Magnam similique libero in ducimus
+              omnis ratione inventore quia quae, aliquam consequuntur commodi
+              distinctio minus recusandae consectetur quibusdam ad officiis
+              officia tenetur maiores dolorum? Quae repudiandae, excepturi
+              soluta mollitia facere cum. Repudiandae doloribus provident animi
+              fugiat a sunt porro maiores, modi odit quis.
+            </p>
           </div>
         </div>
         <div className="chatFooter">
           <div className="inp">
-            <input type="text" name="" id="" placeholder="Send a message" />
-            <button className="send">
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="Send a message"
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <button className="send" onClick={handleSend}>
               <img src={sendBtn} alt="Send" />
             </button>
           </div>
-          <p>ChatGPT may produce inaccurate information about people, places, or facts. ChatGPT August 20 version.</p>
+          <p>
+            ChatGPT may produce inaccurate information about people, places, or
+            facts. ChatGPT August 20 version.
+          </p>
         </div>
       </div>
     </div>
