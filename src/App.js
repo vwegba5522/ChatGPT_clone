@@ -22,9 +22,9 @@ function App() {
     },
   ]);
 
-useEffect(() => {
-  msgEnd.current.scrollIntoView();
-},[messages])
+  useEffect(() => {
+    msgEnd.current.scrollIntoView();
+  }, [messages]);
 
   const handleSend = async () => {
     const text = input;
@@ -38,9 +38,20 @@ useEffect(() => {
     ]);
   };
 
-const handleEnter = async (e) => {
-  if (e.key === 'Enter') await handleSend();
-}
+  const handleEnter = async (e) => {
+    if (e.key === "Enter") await handleSend();
+  };
+
+  const handleQuery = async (e) => {
+    const text = e.target.value;
+    setMessages([...messages, { text, isBot: false }]);
+    const res = await sendMsgToOpenAI(input);
+    setMessages([
+      ...messages,
+      { text, isBot: false },
+      { text: res, isBot: true },
+    ]);
+  };
 
   return (
     <div className="App">
@@ -50,15 +61,28 @@ const handleEnter = async (e) => {
             <img src={gptLogo} alt="Logo" className="logo" />
             <span className="brand">ChatGPT</span>
           </div>
-          <button className="midBtn" onClick={()=>{window.location.reload()}}>
+          <button
+            className="midBtn"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
             <img src={addBtn} alt="" className="addBtn" /> New Chat{" "}
           </button>
           <div className="upperSideButtom">
-            <button className="query">
+            <button
+              className="query"
+              onClick={handleQuery}
+              value={"What is Programming ?"}
+            >
               <img src={msgIcon} alt="" className="Query" /> What is Programming
               ?{" "}
             </button>
-            <button className="query">
+            <button
+              className="query"
+              onClick={handleQuery}
+              value={"How to use an API ?"}
+            >
               <img src={msgIcon} alt="" className="Query" /> How to use an API ?{" "}
             </button>
           </div>

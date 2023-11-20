@@ -1,6 +1,6 @@
-const {Configuration, OpenAIApi} =require("openai");
-const configuration = new Configuration({ apikey: "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" })
-const openai = new OpenAIApi(configuration)
+const {Configuration, OpenAIApi} = require('openai');
+const configuration = new Configuration({ apiKey: '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'})
+const openai = new OpenAIApi(configuration)     
 
 export async function sendMsgToOpenAI(message) {
   const res = await openai.createCompletion({
@@ -11,7 +11,6 @@ export async function sendMsgToOpenAI(message) {
     top_p: 1,
     frequency_penalty: 0,
     present_penalty: 0,
-  });
+  })    
   return res.data.choices[0].text;
-}
-
+}    
